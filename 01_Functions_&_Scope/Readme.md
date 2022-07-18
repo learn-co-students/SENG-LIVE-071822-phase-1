@@ -2,13 +2,12 @@
 ## SWBAT
 - [ ] Describe what functions are and their central importance in JS
 - [ ] Review syntax differences between regular functions and arrow functions
-- [ ]Explain the difference between:
+- [ ] Explain the differences between:
     - [ ] Block scope
     - [ ] Function scope
-    - [ ]Global scope
-- [ ] Understand what it means that a function are first- class -objects
-- [ ] Explain what a higher-order function is
-- [ ] Grasp the relationship betweenDescribe what a callback and higher-order functions is
+    - [ ] Global scope
+- [ ] Understand what it means for functions to be first class objects
+- [ ] Describe what callback and higher-order functions are
 
 <p align="center">
     <img src="../assets/functions.jpeg" width="250" height="250">
@@ -22,7 +21,7 @@ Easley's Technical Books has asked us to build them an inventory management tool
 Today we will work on functions that may help us accomplish some tasks related to displaying data on the application. 
 
 
-The variable inventory is an array of book objects in index.js. Inventory[0] is the following book.
+The variable `inventory` is an array of book objects in index.js. `inventory[0]` is the following book:
 ```
         {
             id:1,
@@ -36,11 +35,10 @@ The variable inventory is an array of book objects in index.js. Inventory[0] is 
         }
 ```
 
-- Demo Function Decoration: 
+- Demo Function Declaration: 
     - Declare a function that takes a book as a parameter and returns the book's price formatted to look like currency. Given inventory[0] the return should be '$10.00"
-    
 - Demo Function Expressions: 
-    - Create a function Expression that takes a book as a parameter and returns a string consisting of the title and author of the book. Given inventory[0] the return should be 'Title: Eloquent JavaScript: A Modern Introduction to Programming by Marjin Haverbeke'
+    - Create a function expression that takes a book as a parameter and returns a string consisting of the title and author of the book. Given inventory[0] the return should be 'Title: Eloquent JavaScript: A Modern Introduction to Programming by Marjin Haverbeke'
 - Demo arrow functions pt1: 
     - Create an arrow function that takes a book as a parameter and returns a string noting a book is on sale. Given inventory[0] the return should be 'Eloquent JavaScript: A Modern Introduction to Programming by Marjin Haverbeke is on sale!'
 -  Demo arrow functions pt2: 
@@ -68,10 +66,10 @@ The variable inventory is an array of book objects in index.js. Inventory[0] is 
 
 
 ## Functions
-Functions are like a little program. They consist of a set of statements/tasks and return a value or undefined. 
+Functions are like little programs. They consist of a set of statements/tasks and return a value or undefined. 
 
 ```
-// This is a function delcoration 
+// This is a function declaration 
 // This function is returning the string of 'hi'
 function sayHi() {
     return 'hi'
@@ -79,10 +77,10 @@ function sayHi() {
 //This is a function reference but it doesn't actually run the function. 
 sayhi
 
-// To run or call or invoke (all the same thing). Write the functions name and add a pair of ()
+// To run or call or invoke (all the same thing), write the function name and add a pair of ()
 sayHi()
 
-// This functions console.logs the string of 'hello' but returns undefined because it does not have the return keyword.
+// This function console.logs the string of 'hello' but returns undefined because it does not have the return keyword.
 
 function sayHello(){
     console.log('hello')
@@ -118,7 +116,7 @@ Arrow functions are another way to declare functions with some added benefits.
 
 ```
 // An arrow function can avoid {} if it's return done on a single line or with () 
-// An arrow function with a single paramater doesn't need the () around the paramater. 
+// An arrow function with a single parameter doesn't need the () around the parameter. 
 const faveFood = food =>  `My fave food is ${food}`
 const faveFood = food => (
      `My fave food is ${food}`
@@ -129,9 +127,9 @@ faveFood('cookies')
 
 Arrow functions also have the added benefit of passing context, but we won't be covering that today. 
 
-## Callbacks and HigherOrder Functions 
+## Callbacks and Higher Order Functions 
 
-Functions in JavaScript are treated like any other variable. When functions are treated like this, we refer to them as First class. One of the most significant benefits of this is that functions in JavaScript can be passed as arguments to other functions.
+Functions in JavaScript are treated like any other variable. When functions are treated like this, we refer to them as First Class. One of the most significant benefits of this is that functions in JavaScript can be passed as arguments to other functions.
 
 ```
 // A function that returns a function is called a Higher-Order Function.
