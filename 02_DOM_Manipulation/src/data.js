@@ -73,4 +73,4 @@ const bookStore = {
 
         }
     ]
-  }
+}

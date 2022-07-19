@@ -68,3 +68,143 @@ const inventory = [
 
         }
     ]
+
+// Function Declaration vs. Function Invocation
+
+// Function Declaration
+// function helloWorld() {
+//     console.log("Hello world!");
+// }
+
+// Function Invocation
+// helloWorld();
+
+// Deliverable 1
+// book => parameter
+// function getBookPrice(book) {
+//     // key <=> value
+//     // return book.price;
+//     return `$${book.price.toFixed(2)}`;
+// }
+
+// book => argument
+// console.log(getBookPrice(inventory[0]));
+
+// Cannot Reassign / Redeclare
+// const inventory = "NEW";
+
+// const getBookPrice = function(book) {
+//     // key <=> value
+//     // return book.price;
+//     return `$${book.price.toFixed(2)}`;
+// }
+
+// console.log(getBookPrice(inventory[0]));
+
+// const getBookTitleAndAuthor = function(book) {
+//     return `${book.title} by ${book.author}`;
+// }
+
+// console.log(getBookTitleAndAuthor(inventory[2]));
+
+// declaration
+// const
+// var
+// var hello = "hello";
+
+// reassign
+// hello = "some new value";
+
+// redeclare
+// var hello = "HELLO!";
+
+// console.log(hello);
+
+// function getBookTitleAndAuthorOriginal(book) {
+//     return `${book.title} by ${book.author} is on sale!`
+// }
+
+// const getBookTitleAndAuthorOne = book => `${book.title} by ${book.author} is on sale!`;
+
+// const getBookTitleAndAuthorTwo = book => {
+//     if (book) {
+//         book.author = "No Author"
+
+//         // console.log("Book exists!")
+//     } else {
+        
+//         // console.log("Book doesn't exist!")
+//     }
+    
+//     return `${book.title} by ${book.author} is on sale!`
+// }
+
+// // console.log(getBookTitleAndAuthorOne(inventory[0]))
+// console.log(getBookTitleAndAuthorTwo(inventory[0]));
+
+// console.log(getBookTitleAndAuthorOne(inventory[0]));
+
+// const applyDiscount = (book, discount) => {
+//     console.log(`$${(book.price * discount).toFixed(2)}`);
+// }
+
+// applyDiscount(inventory[0], 0.5);
+
+// console.log(5 % 2);
+
+// // Global Scope
+// const sample_title = inventory[0].title;
+
+// const createBook = (title, price, author, imageUrl="default_image.png") => {
+//     let new_book = {};
+
+//     new_book.my_new_key = "SOMETHING";
+//     new_book.title = title;
+//     new_book.price = price;
+//     new_book.author = author;
+    
+//     // if imageUrl is passed in, assign it to the new book object
+//     if (imageUrl) {
+//         new_book.imageUrl = imageUrl;
+//     } else {
+//     // if not, assign a default image
+//         new_book.imageUrl = 'default_image.png'
+//     }
+
+//     return new_book;
+// }
+
+// let my_book = createBook("Sample Title", 15, "Sample Author", "/my_image.jpg");
+// let next_book = createBook("Next Title", 20, "Next Author");
+// // console.log(my_book);
+
+// inventory.push(my_book);
+// inventory.push(next_book);
+// console.log(inventory);
+
+// const myArrowFunction = () => console.log("Hello!");
+
+// myArrowFunction();
+
+// Callback Function
+// function addBook(book) {
+//     return book;
+// }
+
+// Callback <=> Higher Order => Expresses a Relationship Between Functions
+
+function doSomethingElse() {
+    console.log("Hello!");
+}
+
+function doSomething(callbackFunction) {
+    callbackFunction();
+}
+
+// doSomething => Higher Order Function
+// doSomething Else => Callback Function
+// doSomething(doSomethingElse);
+
+// doSomething Else => Higher Order Function
+// doSomething => Callback Function
+// doSomethingElse(doSomething);
