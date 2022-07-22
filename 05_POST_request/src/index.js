@@ -2,10 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Fetch requests 
     // Function for making a GET request 
-    function fetchResource(url){
-        return fetch(url)
-        .then(res => res.json())
-    }
+    // function fetchResource(url){
+    //     return fetch(url)
+    //     .then(res => res.json())
+    // }
 // Rendering functions
     // Renders Header
     function renderHeader(store){
@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Event Handlers
     function handleForm(e){
         e.preventDefault()
+        
         //Builds Book
         const book = {
             title: e.target.title.value,
@@ -54,11 +55,81 @@ document.addEventListener('DOMContentLoaded', () => {
             inventory:e.target.inventory.value,
             reviews:[]
         }
-        renderBookCard(book)
+        
+        // Optimistic Rendering
+        // renderBookCard(book);
+
+        // Pessimistic Rendering
+        postResource('http://localhost:3000/stores', book)
+        
+        // .then(book => renderBookCard(book))
+        .then(renderBookCard)
+        .catch(e => console.error(e))
+    }
+
+    function handleStoreForm(e){
+        e.preventDefault()
+        
+        // "location": "Seattle",
+        // "address": "333 st ne Seattle wa 99999",
+        // "number": 9999999999,
+        // "name": "Easley's Technical Books",
+        // "hours": "Monday - Friday 9am - 6pm" 
+      
+        //Builds Store
+        const store = {
+            location: e.target.location.value,
+            address: e.target.address.value,
+            number: e.target.number.value,
+            name: e.target.name.value,
+            hours: e.target.hours.value
+        }
+
+        // Optimistic Rendering
+        // renderBookCard(book);
+
+        // Pessimistic Rendering
+        postResource('http://localhost:3000/stores', store)
+        
+        // .then(store => renderStoreCard(book))
+        .then(store => console.log(`Store has been created! ${store}`))
+        .catch(e => console.error(e))
     }
 
 
+    function fetchResource(url){
+        return fetch(url)
+        
+        // JSON => JS
+        .then(res => res.json())
+    }
+
+    function postResource(url, data) {
+        
+        // Return a Promise
+        return fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            // JS => JSON
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+    }
+
+    // postResource('http://localhost:3000/books', book)
+    // .then(book => {
+    //     console.log(book);
+    // })
+
 // Invoking functions    
+
+    // Optimistic Rendering
+    // renderHeader(store)
+    // renderFooter(store)
+
+    // Pessimistic Rendering
     fetchResource('http://localhost:3000/stores/1')
     .then(store => {
         renderHeader(store)
@@ -66,10 +137,14 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .catch(e => console.error(e))
 
+    // Optimistic Rendering
+    // books.forEach(renderBookCard)
+
+    // Pessimistic Rendering
     fetchResource('http://localhost:3000/books')
     .then(books => books.forEach(renderBookCard))
     .catch(e => console.error(e))
 
-    document.querySelector('#book-form').addEventListener('submit', handleForm)
-
+    // document.querySelector('#book-form').addEventListener('submit', handleForm)
+    document.querySelector('#store-form').addEventListener('submit', handleStoreForm)
 })
