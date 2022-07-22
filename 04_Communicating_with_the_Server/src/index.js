@@ -30,10 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
         li.className = 'list-li'
 
         //Event Listeners 
-        btn.addEventListener('click',()=>li.remove())
+        btn.addEventListener('click',()=>li.remove());
     
-        li.append(h3,pAuthor,pPrice,img,btn)
-        document.querySelector('#book-list').append(li)
+        li.append(h3,pAuthor,pPrice,img,btn);
+        document.querySelector('#book-list').append(li);
+
+        books.push(li);
     }
 
 // Event handlers 
@@ -51,10 +53,96 @@ document.addEventListener('DOMContentLoaded', () => {
         renderBookCard(book)
     }
 
+    const firstButton = document.querySelector('#first_button');
+    const secondButton = document.querySelector('#second_button');
+    const thirdButton = document.querySelector('#third_button');
+    const showBooks = document.querySelector('#show_books');
+    const hideBooks = document.querySelector('#hide_books');
+
+    firstButton.addEventListener('click', () => setStore(1));
+    secondButton.addEventListener('click', () => setStore(2));
+    thirdButton.addEventListener('click', () => setStore(3));
+    showBooks.addEventListener('click', () => handleBooksRequest() );
+    hideBooks.addEventListener('click', () => clearBooks());
+
+    // 👇️ Example promise
+    // const p = Promise.resolve('hello');
+
+    // p.then(value => {
+    //     console.log(value); // 👉️ "hello"
+    // })
+
+    const baseUrl = 'http://localhost:3000';
+
+    // fetch request
+    // asynchronous? => allow the rest of our code to run
+    // uninterrupted
+    function setStore(id) {
+        return fetch(baseUrl + `/stores/${id}`)
+        .then(res => res.json())
+        .then(store => {
+            renderHeader(store);
+            renderFooter(store);
+        })
+        .catch(err => console.log(err));
+    }
+
+    setStore(1)
+    .then(() => {
+        // some other asynchronous behaviors
+        // that should take place afterwards
+
+        // other changes to DOM
+        // reassigning the value of variables set in Global Scope
+    })
+
+    function handleBooksRequest() {
+        // returns undefined unless we include "return"
+        fetch(baseUrl + '/books')
+        .then(res => res.json())
+        .then(books => {
+            books.forEach(renderBookCard);
+            console.log(books);
+        })
+        .catch(err => console.log(err));
+    }
+
+    // load up first store by default
+    setStore(1);
+    // handleBooksRequest();
+
+    const bookList = document.querySelector('#book-list');
+    
+    let books = [];
+
+    function clearBooks() {
+        // bookList.remove();
+        
+        books.forEach(book => {
+            book.remove();
+        });
+
+        books = [];
+        console.log(books);
+    }
+
+    // fetch(`http://localhost:3000/${resource}`)
+    // .then(res => res.json())
+    // .then(data => console.log(data))
+
+    // getResource => returns a promise
+    // render header
+    // getResource('stores/1')
+    // .then(store => {
+    //     renderHeader(store)
+    //     renderFooter(store)
+    // })
+    // .catch(err => console.log(err));
+
 //Invoking functions
-    renderHeader(bookStore)
-    renderFooter(bookStore)
-    bookStore.inventory.forEach(renderBookCard)
+    // renderHeader(bookStore)
+    // renderFooter(bookStore)
+    // bookStore.inventory.forEach(renderBookCard)
     document.querySelector('#book-form').addEventListener('submit', handleForm)
 
 
