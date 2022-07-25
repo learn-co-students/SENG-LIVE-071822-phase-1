@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(res => res.json())
         }
 
-        function createResources(url, body){
+        // Function for making a POST Request
+        function createResource(url, body){
             return fetch(url,{
                 method: 'POST', 
                 headers: {
@@ -16,6 +17,28 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(res => res.json())
         }
+
+        // Function for making a PATCH request
+        function updateResource(url, body){
+            return fetch(url,{
+                method: 'PATCH', 
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            })
+            .then(res => res.json())
+        }
+
+        // Function for making a DELETE request
+        function deleteResource(url){
+            return fetch(url,{
+                method: 'DELETE'
+            })
+            .then(res => res.json())
+        }
+
+        // updateResource('http://localhost:3000/books/1', {price: 100})
 
     // Rendering functions
         // Renders Header
@@ -35,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const h3 = document.createElement('h3')
             const pAuthor = document.createElement('p')
             const pPrice = document.createElement('p')
+            const pInventory = document.createElement('input')
             const img = document.createElement('img')
             const btn = document.createElement('button')
     
@@ -42,14 +66,17 @@ document.addEventListener('DOMContentLoaded', () => {
             pAuthor.textContent = cardData.author
             pPrice.textContent = `$${cardData.price}`
             btn.textContent = 'Delete'
-    
+            pInventory.value = cardData.inventory
+            pInventory.type = 'number'
+
             img.src = cardData.imageUrl
             li.className = 'list-li'
     
             //Event Listeners 
-            btn.addEventListener('click',()=>li.remove())
+            btn.addEventListener('click', () => handleDeleteBook(cardData.id, li))
+            pInventory.addEventListener('change', (e) => handleUpdateBook(cardData.id, e.target.value))
         
-            li.append(h3,pAuthor,pPrice,img,btn)
+            li.append(h3,pAuthor,pPrice,img,pInventory,btn)
             document.querySelector('#book-list').append(li)
         }
     
@@ -65,10 +92,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 inventory:e.target.inventory.value,
                 reviews:[]
             }
-            createResources('http://localhost:3000/books', book)
+            createResource('http://localhost:3000/books', book)
             .then(renderBookCard)
             .catch(e => console.error(e))
 
+        }
+
+        function handleUpdateBook(id, inventoryNum) {
+            updateResource(`http://localhost:3000/books/${id}`, {inventory: inventoryNum})
+            .catch(e => console.error(e))
+        }
+
+        function handleDeleteBook(id, bookCard) {
+            deleteResource(`http://localhost:3000/books/${id}`)
+            // Pessimistic Rendering
+            .then(() => bookCard.remove())
+            // additional asynchronous behaviors...
+            // .then(() => someFunction())
+            // .then(() => someOtherFunction())
+            .catch(e => console.error(e))
         }
     
     
