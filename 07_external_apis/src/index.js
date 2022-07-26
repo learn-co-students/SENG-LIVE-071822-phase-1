@@ -1,3 +1,15 @@
+// console.log(apiKEY);
+
+// https://pokeapi.co/api/v2/pokemon/ditto
+// function handleSearch(name) {
+//     return fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
+//     .then(res => res.json())
+//     .then(data => console.log(data));
+// }
+
+// handleSearch('squirtle')
+
+
 document.addEventListener('DOMContentLoaded', () => {
     // Fetch requests 
         // Function for making a GET request 
@@ -127,11 +139,71 @@ document.addEventListener('DOMContentLoaded', () => {
         
         //Handles Google Books API search
         function handleAPIQuery(e){
-            e.preventDefault()
-            const search = e.target.search.value
+            e.preventDefault();
             
+            const search = e.target.search.value;
+            
+            // console.log(search);
+
             // use this API endpoint
-            // `https://www.googleapis.com/books/v1/volumes?q=${search}&maxResults=20&key=${apiKEY}`
+            // search term + API key to get the necessary responses
+            fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&maxResults=20&key=${apiKEY}`)
+            .then(res => res.json())
+            .then(data => data.items.forEach(renderGoogleBook));
+        }
+
+        function renderGoogleBook(book) {
+            
+            // <ul>
+            //  <li>
+            //      <h2>Some Book</h2>
+            //  </li>
+            // </ul>
+            // <ul>
+            //  <li>
+            //      <h2>Some Other Book</h2>
+            //  </li>
+            // </ul>
+            // ...
+
+            // const ul
+            const div = document.createElement('div');
+
+            // title
+            const title = document.createElement('h2');
+            // authors
+            const authors = document.createElement('p');
+            // publisher
+            const publisher = document.createElement('p');
+            // images
+            const thumbnail = document.createElement('img');
+
+            if(book.volumeInfo.authors) {
+                const authorNames = book.volumeInfo.authors.join(' and ');
+                
+                authors.textContent = `Authors: ${authorNames}`;
+            } else {
+                authors.textContent = "No Authors!";
+            }
+
+            // set attributes, add content, etc.
+            title.textContent = `Title: ${book.volumeInfo.title}`;
+            
+            if(book.volumeInfo.publisher) {
+                publisher.textContent = `Publisher: ${book.volumeInfo.publisher}`;
+            } else {
+                publisher.textContent = "No Publisher!"
+            }
+            
+            thumbnail.src = book.volumeInfo.imageLinks.smallThumbnail;
+
+            // appending sub items to li
+            div.append(title,publisher,authors,thumbnail);
+
+            // console.log(document.querySelector('#book-list'));
+
+            document.querySelector('main').append(div);
+            // console.log(book.volumeInfo.authors.join(' and '));
         }
 
     // Invoking functions    
